@@ -5,7 +5,7 @@ pipeline {
     SONAR_URL = "http://44.223.69.227:9000"  // SonarQube server
     DOCKER_IMAGE = "anuragjosyula07/ultimate-cicd:${BUILD_NUMBER}"
     GIT_REPO_NAME = "Jenkins-Zero-To-Hero"
-    GIT_USER_NAME = "iam-veeramalla"
+    GIT_USER_NAME = "AnuragJosyula"
   }
 
   stages {
