@@ -3,7 +3,7 @@ pipeline {
 
   environment {
     SONAR_URL = "http://44.223.69.227:9000"  // SonarQube server
-    DOCKER_IMAGE = "abhishekf5/ultimate-cicd:${BUILD_NUMBER}"
+    DOCKER_IMAGE = "anuragjosyula07/ultimate-cicd:${BUILD_NUMBER}"
     GIT_REPO_NAME = "Jenkins-Zero-To-Hero"
     GIT_USER_NAME = "iam-veeramalla"
   }
