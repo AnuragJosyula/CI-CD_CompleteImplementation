@@ -2,13 +2,19 @@ pipeline {
   agent any
 
   environment {
-    SONAR_URL = "http://18.209.61.34:9000"   // Replace with your actual SonarQube URL
+    SONAR_URL = "http://44.223.69.227:9000"  // SonarQube server
     DOCKER_IMAGE = "abhishekf5/ultimate-cicd:${BUILD_NUMBER}"
     GIT_REPO_NAME = "Jenkins-Zero-To-Hero"
     GIT_USER_NAME = "iam-veeramalla"
   }
 
   stages {
+
+    stage('Workspace Cleanup') {
+      steps {
+        cleanWs()
+      }
+    }
 
     stage('Checkout') {
       steps {
@@ -20,7 +26,7 @@ pipeline {
       steps {
         sh '''
           cd java-maven-sonar-argocd-helm-k8s/spring-boot-app
-          mvn clean package
+          mvn --batch-mode --no-transfer-progress clean package
         '''
       }
     }
@@ -39,17 +45,15 @@ pipeline {
     }
 
     stage('Build and Push Docker Image') {
-      environment {
-        DOCKER_USERNAME = credentials('docker-username')
-        DOCKER_PASSWORD = credentials('docker-password')
-      }
       steps {
-        sh '''
-          cd java-maven-sonar-argocd-helm-k8s/spring-boot-app
-          docker build -t ${DOCKER_IMAGE} .
-          echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-          docker push ${DOCKER_IMAGE}
-        '''
+        withCredentials([usernamePassword(credentialsId: 'dockerhub-cred', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+          sh '''
+            cd java-maven-sonar-argocd-helm-k8s/spring-boot-app
+            docker build -t ${DOCKER_IMAGE} .
+            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+            docker push ${DOCKER_IMAGE}
+          '''
+        }
       }
     }
 
@@ -57,8 +61,8 @@ pipeline {
       steps {
         withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
           sh '''
-            git config user.email "your@email.com"
-            git config user.name "Your Name"
+            git config user.email "anurag@example.com"
+            git config user.name "Anurag Josyula"
 
             sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
 
