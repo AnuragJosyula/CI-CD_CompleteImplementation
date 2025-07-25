@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   environment {
-    SONAR_URL = "http://44.223.69.227:9000"  // SonarQube server
+    SONAR_URL = "http://127.0.0.1:9000"  // SonarQube server
     DOCKER_IMAGE = "anuragjosyula/ultimate-cicd:${BUILD_NUMBER}"
     GIT_REPO_NAME = "CI-CD_CompleteImplementation"
     GIT_USER_NAME = "AnuragJosyula"
