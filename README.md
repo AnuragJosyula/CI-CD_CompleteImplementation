@@ -103,4 +103,5 @@ argocd app sync springboot-app
 - Use `Always` imagePullPolicy to always pull new images.
 - Keep Jenkins and ArgoCD on separate ports in Minikube to avoid clashes.
 - Make sure all the credentials are correct, including docker ID, API keys
+- If there's a problem with ArgoCD service, like changes are reverting back to clusterIP from Nodeport , try changing the ArgoCD serive file itself and restart the pod.
 
