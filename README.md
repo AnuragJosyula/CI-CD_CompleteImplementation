@@ -86,7 +86,7 @@ argocd app sync springboot-app
 
 ---
 
-## 🌟 What You Learn
+## 🌟 What We Learn
 
 - Real-world Jenkins pipeline scripting  
 - Automating code quality checks (SonarQube)  
@@ -102,4 +102,5 @@ argocd app sync springboot-app
 - Make sure ArgoCD has access to the GitHub manifest repo.
 - Use `Always` imagePullPolicy to always pull new images.
 - Keep Jenkins and ArgoCD on separate ports in Minikube to avoid clashes.
+- Make sure all the credentials are correct, including docker ID, API keys
 
